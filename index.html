@@ -29,7 +29,7 @@
             aria-describedby="emailHelp"
           />
           <div id="emailHelp" class="form-text">
-            We'll never share your email with anyone else.
+            *list kegiatan dapat dilihat siapapun
           </div>
           <button
             type="submit"
@@ -89,7 +89,6 @@
       });
 
       //   const postData = ;
-
       $("#todoBtn").on("click", () => {
         push(ref(db, "todo"), {
           kegiatan: $("#todoInput").val(),
