@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=`, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <title>Todo List</title>
+  </head>
+  <body>
+    <div class="container my-5">
+      <div>
+        <h3>List Kegiatan</h3>
+      </div>
+      <ul class="list-group"></ul>
+
+      <form>
+        <div class="my-3">
+          <label for="text" class="form-label">Tambahkan Kegiatan</label>
+          <input
+            type="text"
+            class="form-control"
+            id="todoInput"
+            aria-describedby="emailHelp"
+          />
+          <div id="emailHelp" class="form-text">
+            We'll never share your email with anyone else.
+          </div>
+          <button
+            type="submit"
+            id="todoBtn"
+            disabled
+            class="btn btn-primary my-1"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+      import {
+        getDatabase,
+        ref,
+        onValue,
+        child,
+        set,
+        update,
+        push,
+      } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCJbT7P08lzWpeD_squakFYeGbsRRWGHAY",
+        authDomain: "yeag-todo.firebaseapp.com",
+        projectId: "yeag-todo",
+        storageBucket: "yeag-todo.appspot.com",
+        messagingSenderId: "355732150409",
+        appId: "1:355732150409:web:b90edf032bf39ff3ea8e58",
+        measurementId: "G-HLGDW1X3ZR",
+        databaseURL:
+          "https://yeag-todo-default-rtdb.asia-southeast1.firebasedatabase.app/",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      //   function start
+      const item = document.querySelector(".list-group");
+
+      function RenderDatabase(data) {
+        $.each(data, function (i, datsa) {
+          $(item).append(`<li class="list-group-item ">${datsa.kegiatan}</li>`);
+        });
+      }
+
+      const db = getDatabase();
+      const dbRef = ref(db, "todo");
+      onValue(dbRef, (bruhmabarcuy) => {
+        const data = bruhmabarcuy.val();
+        RenderDatabase(data);
+      });
+
+      //   const postData = ;
+
+      $("#todoBtn").on("click", () => {
+        push(ref(db, "todo"), {
+          kegiatan: $("#todoInput").val(),
+        });
+      });
+
+      //   btn
+      //todoInput
+      $("#todoInput").val("");
+      $("#todoInput").blur(() => {
+        // console.log($("#todoInput").val());
+        //
+        if (!$("#todoInput").val().length > 0) {
+          $("#todoBtn").prop("disabled", true);
+        } else {
+          $("#todoBtn").prop("disabled", false);
+        }
+      });
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

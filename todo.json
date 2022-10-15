@@ -1,0 +1,14 @@
+{
+  "todo": [
+    {
+      "kegiatan": "Baca Manga",
+      "keywords": "membaca",
+      "type": "long task"
+    },
+    {
+      "kegiatan": "NontonAnime",
+      "keywords": "membaca",
+      "type": "short"
+    }
+  ]
+}
